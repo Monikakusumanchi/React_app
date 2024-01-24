@@ -27,7 +27,7 @@ function App() {
         referrerPolicy: 'no-referrer',
         body: formData,
       });
-
+      console.log(response)
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }

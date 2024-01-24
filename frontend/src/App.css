@@ -85,6 +85,8 @@ h1 {
   height: 400px; /* Increase the height for a better chat experience */
   overflow-y: scroll;
   flex-shrink: 0; /* Prevent the chat container from shrinking */
+  text-align: left;
+
 }
 
 .chat-message {
