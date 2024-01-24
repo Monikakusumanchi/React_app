@@ -1,43 +1,136 @@
-/* App.css */
-
-#container {
-  text-align: left;
-  color: black;
+.App {
   display: flex;
-  flex-direction: column;
-  align-items: left;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
 }
 
-#apiKey {
-  margin: 10px;
-  width: 400px;
-  height: 30px;
-  font-size: 16px;
+h1 {
+  color: #333;
 }
 
-#promptContainer {
-  margin: 20px;
+.chat-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 300px;
+  height: 400px; /* Increase the height for a better chat experience */
+  overflow-y: scroll;
+  flex-shrink: 0; /* Prevent the chat container from shrinking */
+}
+
+.chat-message {
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+p {
+  margin: 0;
+}
+
+.input-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-left: 20px; /* Add some margin for spacing */
 }
 
-#prompt {
-  width: 400px;
-  height: 150px;
-  font-size: 16px;
+label {
+  margin: 10px 0;
+  display: block;
 }
 
-#generateButton {
-  background-color: blue;
+input {
+  padding: 8px;
+  margin: 5px;
+}
+
+button {
+  background-color: #007bff;
   color: white;
-  padding: 15px;
-  border-radius: 5px;
-  font-size: 18px;
-  margin-top: 10px;
+  padding: 10px;
+  margin-top: 10px; /* Add some margin for spacing */
+  border: none;
+  cursor: pointer;
 }
 
-#response-container {
-  margin-top: 20px;
-  width: 400px;
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
+
+p {
+  margin: 0;
+}
+
+/* Add any additional styles as needed */
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+}
+
+.chat-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 300px;
+  height: 400px; /* Increase the height for a better chat experience */
+  overflow-y: scroll;
+  flex-shrink: 0; /* Prevent the chat container from shrinking */
+}
+
+.chat-message {
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+p {
+  margin: 0;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 20px; /* Add some margin for spacing */
+}
+
+label {
+  margin: 10px 0;
+  display: block;
+}
+
+input {
+  padding: 8px;
+  margin: 5px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  margin-top: 10px; /* Add some margin for spacing */
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+p {
+  margin: 0;
+}
+
+/* Add any additional styles as needed */
