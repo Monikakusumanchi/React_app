@@ -16,7 +16,7 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Hello": "suzukaaa"}
 
 @app.post("/get_gemini_completion")
 async def get_gemini_completion(
