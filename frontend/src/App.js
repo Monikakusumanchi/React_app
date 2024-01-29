@@ -1,3 +1,5 @@
+// App.js
+
 import React, { useState } from 'react';
 import './App.css';
 
@@ -49,11 +51,10 @@ function App() {
       </header>
 
       <div id="container">
-      <div>
-            <h4>Enter your key:</h4>
-          </div>
+        <div>
+          <h4>Enter your key:</h4>
+        </div>
         <div id="keyContainer">
-          
           <input
             type="password"
             placeholder="Enter the Geminikey"
@@ -96,4 +97,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; // Export App as the default
