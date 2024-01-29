@@ -1,49 +1,41 @@
 import React, { useState } from 'react';
-import { environment } from "./environment";
 import './App.css';
 
 function App() {
-  const env = environment;
-  const [geminiApiKey, setGeminiApiKey] = useState('');
+  const [geminikey, setGeminikey] = useState('');
   const [prompt, setPrompt] = useState('');
-  const [response, setResponse] = useState('');
+  const [responses, setResponses] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [chatMessages, setChatMessages] = useState([]);
 
-  const handleRequest = async () => {
+  const getResponse = async () => {
+    setLoading(true);
+
     try {
-      setLoading(true);
-
       const formData = new FormData();
-      formData.append('gemini_api_key', geminiApiKey);
+      formData.append('gemini_api_key', geminikey);
       formData.append('prompt', prompt);
 
-      const response = await fetch(env.fastAPIUrl, {
+      const response = await fetch('https://8000-monikakusumanc-reactapp-t5b6jdzjsvt.ws-us107.gitpod.io/get_gemini_completion', {
         method: 'POST',
         cache: 'no-cache',
         credentials: 'include',
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
         body: formData,
+
       });
-      console.log(response)
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const data = await response.json();
-      console.log("API Response:", data);
+      const responseData = await response.json();
 
-      setResponse(data.response);
-
-      // Add the response to the chat messages
-      setChatMessages([...chatMessages, { type: 'user', text: prompt }, { type: 'bot', text: data.response }]);
-      setError('');
+      // Update state with the response from the backend
+      const newPrompt = { user: prompt, bot: responseData.response };
+      setResponses((prevResponses) => [...prevResponses, newPrompt]);
     } catch (error) {
-      setResponse('');
-      setError('Error occurred. Please check your input and try again.');
-      console.error('Error:', error);
+      console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
@@ -51,30 +43,45 @@ function App() {
 
   return (
     <div className="App">
-      <div className="input-container">
+      <header>
         <h1>LLM Chatbot</h1>
-        <label>
-          Gemini API Key:
-          <input type="password" value={geminiApiKey} onChange={(e) => setGeminiApiKey(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Prompt:
-          <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} />
-        </label>
-        <br />
-        <button onClick={handleRequest} disabled={loading}>
-          {loading ? 'Loading...' : 'Get Response'}
-        </button>
-        <br />
-        <p style={{ color: 'red' }}>{error}</p>
-      </div>
-      <div className="chat-container">
-        {chatMessages.map((message, index) => (
-          <div key={index} className={`chat-message ${message.type === 'user' ? 'user' : 'bot'}`}>
-            <p>{message.text}</p>
+      </header>
+
+      <div id="container">
+        <div id="inputContainer">
+          <input
+            type="text"
+            placeholder="Enter the Geminikey"
+            value={geminikey}
+            onChange={(e) => setGeminikey(e.target.value)}
+          />
+          <button onClick={getResponse}>Get Response</button>
+        </div>
+
+        <div id="promptContainer">
+          <input
+            type="text"
+            placeholder="Enter the prompt"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+          />
+          <div id="responseContainer">
+            {responses.map((response, index) => (
+              <div key={index}>
+                <p>
+                  <strong>User:</strong> {response.user}
+                </p>
+                <p>
+                  <strong>Bot:</strong> {response.bot}
+                </p>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        <div id="loader" style={{ display: loading ? 'block' : 'none' }}>
+          Loading...
+        </div>
       </div>
     </div>
   );
