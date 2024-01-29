@@ -6,23 +6,24 @@ function App() {
   const [prompt, setPrompt] = useState('');
   const [responses, setResponses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const getResponse = async () => {
     setLoading(true);
 
     try {
+      setError(null); // Clear previous errors
       const formData = new FormData();
       formData.append('gemini_api_key', geminikey);
       formData.append('prompt', prompt);
 
-      const response = await fetch('https://8000-monikakusumanc-reactapp-t5b6jdzjsvt.ws-us107.gitpod.io/get_gemini_completion', {
+      const response = await fetch('https://8000-monikakusumanc-reactapp-rh7k8sroffu.ws-us107.gitpod.io/get_gemini_completion', {
         method: 'POST',
         cache: 'no-cache',
         credentials: 'include',
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
         body: formData,
-
       });
 
       if (!response.ok) {
@@ -33,9 +34,9 @@ function App() {
 
       // Update state with the response from the backend
       const newPrompt = { user: prompt, bot: responseData.response };
-      setResponses((prevResponses) => [...prevResponses, newPrompt]);
+      setResponses([newPrompt]); // Clear previous responses and set the new one
     } catch (error) {
-      console.error('Error fetching data:', error);
+      setError(`Error fetching data: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -48,40 +49,48 @@ function App() {
       </header>
 
       <div id="container">
-        <div id="inputContainer">
+      <div>
+            <h4>Enter your key:</h4>
+          </div>
+        <div id="keyContainer">
+          
           <input
-            type="text"
+            type="password"
             placeholder="Enter the Geminikey"
             value={geminikey}
             onChange={(e) => setGeminikey(e.target.value)}
           />
-          <button onClick={getResponse}>Get Response</button>
         </div>
-
-        <div id="promptContainer">
+        <div>
+          <h4>Enter your prompt:</h4>
+        </div>
+        <div id="inputContainer">
           <input
             type="text"
             placeholder="Enter the prompt"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
+            style={{ height: '100px', marginBottom: '10px' }}
           />
           <div id="responseContainer">
+            <h2>Response</h2>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             {responses.map((response, index) => (
               <div key={index}>
                 <p>
                   <strong>User:</strong> {response.user}
                 </p>
                 <p>
-                  <strong>Bot:</strong> {response.bot}
+                  <strong>Bot:</strong> <pre>{response.bot}</pre>
                 </p>
               </div>
             ))}
           </div>
         </div>
 
-        <div id="loader" style={{ display: loading ? 'block' : 'none' }}>
-          Loading...
-        </div>
+        <button onClick={getResponse} style={{ backgroundColor: loading ? 'lightgrey' : 'blue', color: 'white' }}>
+          {loading ? 'Loading...' : 'Get Response'}
+        </button>
       </div>
     </div>
   );
