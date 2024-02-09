@@ -1,9 +1,11 @@
 // App.js
 
 import React, { useState } from 'react';
+import { environment } from "./environment";
 import './App.css';
 
 function App() {
+  const env = environment;
   const [geminikey, setGeminikey] = useState('');
   const [prompt, setPrompt] = useState('');
   const [responses, setResponses] = useState([]);
@@ -19,7 +21,7 @@ function App() {
       formData.append('gemini_api_key', geminikey);
       formData.append('prompt', prompt);
 
-      const response = await fetch('https://8000-monikakusumanc-reactapp-rh7k8sroffu.ws-us107.gitpod.io/get_gemini_completion', {
+      const response = await fetch(env.fastAPIUrl, {
         method: 'POST',
         cache: 'no-cache',
         credentials: 'include',
