@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    fastAPIUrl: 'https://monikakusumanc-reactapp-eycpcn7ta91.ws-us108.gitpod.io'
+    fastAPIUrl: 'https://8000-monikakusumanc-reactapp-8jpc1pon1di.ws-us108.gitpod.io/get_gemini_completion'
   };
